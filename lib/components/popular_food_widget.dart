@@ -1,11 +1,17 @@
+import 'dart:math';
+
+import 'package:app_food_flutter/components/product_detail_screen.dart';
 import 'package:app_food_flutter/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import '../data.dart';
+import '../model/product.dart';
 
 class PopularFood extends StatelessWidget {
-  const PopularFood({super.key});
+  const PopularFood({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,18 @@ class PopularFood extends StatelessWidget {
       child: ListView.separated(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) => Padding(
+          itemBuilder: (context, index) {
+            final item = popularProduct[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailScreen(item: item),
+                  ),
+                );
+              },
+              child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: DecoratedBox(
@@ -33,13 +50,13 @@ class PopularFood extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: Image.asset(
-                            popularProduct[index].image,
+                            item.image,
                             height: 80,
                             width: 110,
                           ),
                         ),
                         Text(
-                          popularProduct[index].name,
+                          item.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -65,7 +82,8 @@ class PopularFood extends StatelessWidget {
                                   size: 15,
                                 ),
                                 Text(
-                                  popularProduct[index].rating.toString(),
+                                  '(${(popularProduct[index].rating.toString())})',
+                                  style: const TextStyle(fontSize: 12),
                                 ),
                               ],
                             ),
@@ -97,6 +115,8 @@ class PopularFood extends StatelessWidget {
                   ),
                 ),
               ),
+            );
+          },
           separatorBuilder: (context, index) => const SizedBox(width: 10),
           itemCount: popularProduct.length),
     );

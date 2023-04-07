@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../data.dart';
@@ -58,7 +55,7 @@ class Categories extends StatelessWidget {
                   ],
                 ),
               )),
-          separatorBuilder: (context, index) => SizedBox(
+          separatorBuilder: (context, index) => const SizedBox(
                 width: 15,
               ),
           itemCount: categories.length),
